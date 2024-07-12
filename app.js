@@ -6,24 +6,32 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 let tasks = [{
-    "id": 2,
-    "title": "Create a new project",
-    "description": "Create a new project using Magic",
-    "completed": false
+    id: 1,
+    title: "Set up environment",
+    description: "Install Node.js, npm, and git",
+    completed: true,
   }]
 
-app.get("/",(req, res) => {
+app.get("/", (req, res) => {
     res.send("<h2>This is Task Manager Home Page</h1>")
 })
 
 // GET /tasks: Retrieve all tasks.
-app.get("/tasks",(req, res) => {
-    res.send(tasks)
+app.get("/tasks", (req, res) => {
+    res.json(tasks)
 })
 
 // GET /tasks/:id: Retrieve a single task by its ID.
-app.get("/tasks",(req, res) => {
-    res.send(tasks)
+app.get("/tasks/:id", (req, res) => {
+    const id = req.params.id
+    // console.log(id, "id")
+
+    for(let i=0;i<tasks.length;i++){
+        if(tasks[i]["id"] == id){
+            // console.log(tasks[i])
+            res.json(tasks[i])
+        }
+    }// for
 })
 
 // POST /tasks: Create a new task.
