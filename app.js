@@ -13,17 +13,17 @@ let tasks = [{
   }]
 
 app.get("/", (req, res) => {
-    res.send("<h2>This is Task Manager Home Page</h1>")
+    res.send("<h2>This is Task Manager Home Page</h1>");
 })
 
 // GET /tasks: Retrieve all tasks.
 app.get("/tasks", (req, res) => {
-    res.json(tasks)
+    res.json(tasks);
 })
 
 // GET /tasks/:id: Retrieve a single task by its ID.
 app.get("/tasks/:id", (req, res) => {
-    const id = req.params.id
+    const id = req.params.id;
     // console.log(id, "id")
 
     for(let i=0;i<tasks.length;i++){
@@ -35,6 +35,27 @@ app.get("/tasks/:id", (req, res) => {
 })
 
 // POST /tasks: Create a new task.
+app.post("/tasks/", (req, res) => {
+    const title = req.body.title;
+    const description = req.body.description;
+    const completed = req.body.completed;
+
+    if(typeof title == 'undefined' || typeof description == 'undefined' || typeof completed == 'undefined'){
+        res.status(400).json(tasks);
+    }
+    else{
+        const newTask = {
+            id: tasks.length + 1,
+            title: title,
+            description: description,
+            completed: completed
+        };
+        tasks.push(newTask);
+
+        res.status(201).json(tasks);
+    }
+
+})
 
 // PUT /tasks/:id: Update an existing task by its ID.
 
