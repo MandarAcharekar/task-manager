@@ -10,16 +10,16 @@ let tasks = [{
     title: "Set up environment",
     description: "Install Node.js, npm, and git",
     completed: true,
-  }]
+}];
 
 app.get("/", (req, res) => {
     return res.send("<h2>This is Task Manager Home Page</h1>");
-})
+});
 
 // GET /tasks: Retrieve all tasks.
 app.get("/tasks", (req, res) => {
     return res.send({"tasks": tasks});
-})
+});
 
 // GET /tasks/:id: Retrieve a single task by its ID.
 app.get("/tasks/:id", (req, res) => {
@@ -31,8 +31,8 @@ app.get("/tasks/:id", (req, res) => {
         }
     }// for
 
-    return res.status(404).send({"msg": `Task with id=${id} not found`})
-})
+    return res.status(404).send({"msg": `Task with id=${id} not found`});
+});
 
 // POST /tasks: Create a new task.
 app.post("/tasks/", (req, res) => {
@@ -54,7 +54,7 @@ app.post("/tasks/", (req, res) => {
 
         return res.status(201).json(tasks.slice(-1));
     }
-})
+});
 
 // PUT /tasks/:id: Update an existing task by its ID.
 app.put("/tasks/:id", (req, res) => {
@@ -74,14 +74,32 @@ app.put("/tasks/:id", (req, res) => {
             tasks[i].description = description;
             tasks[i].completed = completed;
 
-            return res.send(tasks[i])
+            return res.send(tasks[i]);
         }
     }
 
-    return res.status(404).send({"msg": `Task with id=${id} not found`})
-})
+    return res.status(404).send({"msg": `Task with id=${id} not found`});
+});
 
 // DELETE /tasks/:id: Delete a task by its ID.
+app.delete("/tasks/:id", (req, res) => {
+    const id = req.params.id;
+    let index = null;
+
+    for(let i=0;i<tasks.length;i++){
+        if(tasks[i]["id"] == id){
+            index = i;
+        }
+    }
+
+    if(typeof index === 'number'){
+        const deletedTask = tasks.splice(index, 1)[0]
+        return res.send(deletedTask);
+    }
+    else{
+        return res.status(404).send({"msg": `Task with id=${id} not found`});
+    }
+});
 
 
 app.listen(port, (err) => {
