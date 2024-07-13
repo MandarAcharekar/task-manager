@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
 
 // GET /tasks: Retrieve all tasks.
 app.get("/tasks", (req, res) => {
-    return res.send({"tasks": tasks});
+    return res.send(tasks);
 });
 
 // GET /tasks/:id: Retrieve a single task by its ID.
