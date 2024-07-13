@@ -29,9 +29,14 @@ app.get("/tasks/:id", (req, res) => {
     for(let i=0;i<tasks.length;i++){
         if(tasks[i]["id"] == id){
             // console.log(tasks[i])
-            res.json(tasks[i])
+            // res.send({"data":tasks[i]})
+            res.send({"data": "Success"})
+
         }
     }// for
+
+    const msg = `Task with id=${id} not found`
+    res.status(400).send({"err_msg":msg})
 })
 
 // POST /tasks: Create a new task.
@@ -58,6 +63,10 @@ app.post("/tasks/", (req, res) => {
 })
 
 // PUT /tasks/:id: Update an existing task by its ID.
+app.put("/tasks/:id", (req, res) => {
+    const id = req.params.id;
+
+})
 
 // DELETE /tasks/:id: Delete a task by its ID.
 
