@@ -31,7 +31,7 @@ app.get("/tasks/:id", (req, res) => {
         }
     }// for
 
-    return res.status(400).send({"msg": `Task with id=${id} not found`})
+    return res.status(404).send({"msg": `Task with id=${id} not found`})
 })
 
 // POST /tasks: Create a new task.
@@ -58,8 +58,27 @@ app.post("/tasks/", (req, res) => {
 
 // PUT /tasks/:id: Update an existing task by its ID.
 app.put("/tasks/:id", (req, res) => {
-    // const id = req.params.id;
+    const id = req.params.id;
 
+    const title = req.body.title;
+    const description = req.body.description;
+    const completed = req.body.completed;
+
+    if(typeof title !== 'string' || typeof description !== 'string' || typeof completed !== 'boolean'){
+        return res.status(400).send({"msg": "Payload is incorrect"});
+    }
+
+    for(let i=0;i<tasks.length;i++){
+        if(tasks[i]["id"] == id){
+            tasks[i].title = title;
+            tasks[i].description = description;
+            tasks[i].completed = completed;
+
+            return res.send(tasks[i])
+        }
+    }
+
+    return res.status(404).send({"msg": `Task with id=${id} not found`})
 })
 
 // DELETE /tasks/:id: Delete a task by its ID.
