@@ -13,30 +13,25 @@ let tasks = [{
   }]
 
 app.get("/", (req, res) => {
-    res.send("<h2>This is Task Manager Home Page</h1>");
+    return res.send("<h2>This is Task Manager Home Page</h1>");
 })
 
 // GET /tasks: Retrieve all tasks.
 app.get("/tasks", (req, res) => {
-    res.json(tasks);
+    return res.send({"tasks": tasks});
 })
 
 // GET /tasks/:id: Retrieve a single task by its ID.
 app.get("/tasks/:id", (req, res) => {
     const id = req.params.id;
-    // console.log(id, "id")
 
     for(let i=0;i<tasks.length;i++){
         if(tasks[i]["id"] == id){
-            // console.log(tasks[i])
-            // res.send({"data":tasks[i]})
-            res.send({"data": "Success"})
-
+            return res.send(tasks[i])
         }
     }// for
 
-    const msg = `Task with id=${id} not found`
-    res.status(400).send({"err_msg":msg})
+    return res.status(400).send({"msg": `Task with id=${id} not found`})
 })
 
 // POST /tasks: Create a new task.
@@ -46,7 +41,7 @@ app.post("/tasks/", (req, res) => {
     const completed = req.body.completed;
 
     if(typeof title == 'undefined' || typeof description == 'undefined' || typeof completed == 'undefined'){
-        res.status(400).json(tasks);
+        return res.status(400).send({"msg": "Payload is incorrect"});
     }
     else{
         const newTask = {
@@ -57,14 +52,13 @@ app.post("/tasks/", (req, res) => {
         };
         tasks.push(newTask);
 
-        res.status(201).json(tasks);
+        return res.status(201).json(tasks.slice(-1));
     }
-
 })
 
 // PUT /tasks/:id: Update an existing task by its ID.
 app.put("/tasks/:id", (req, res) => {
-    const id = req.params.id;
+    // const id = req.params.id;
 
 })
 
