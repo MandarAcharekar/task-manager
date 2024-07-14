@@ -30,7 +30,7 @@ app.get("/tasks", (req, res) => {
         return res.send(tasks);
     }
     catch(error){
-        return res.status(500).json({"msg": `Error occured : ${error}`})
+        return res.status(500).json({"msg": `Error occured : ${error}`});
     }
 });
 
@@ -41,14 +41,14 @@ app.get("/tasks/:id", (req, res) => {
     
         for(let i=0;i<tasks.length;i++){
             if(tasks[i]["id"] == id){
-                return res.send(tasks[i])
+                return res.send(tasks[i]);
             }
-        }// for
+        }
     
         return res.status(404).send({"msg": `Task with id=${id} not found`});
     }
     catch(error){
-        return res.status(500).json({"msg": `Error occured : ${error}`})
+        return res.status(500).json({"msg": `Error occured : ${error}`});
     }
 });
 
@@ -74,7 +74,7 @@ app.post("/tasks/", (req, res) => {
         return res.status(201).json(tasks.slice(-1));
     }
     catch(error){
-        return res.status(500).json({"msg": `Error occured : ${error}`})
+        return res.status(500).json({"msg": `Error occured : ${error}`});
     }
 });
 
@@ -104,7 +104,7 @@ app.put("/tasks/:id", (req, res) => {
         return res.status(404).send({"msg": `Task with id=${id} not found`});
     }
     catch(error){
-        return res.status(500).json({"msg": `Error occured : ${error}`})
+        return res.status(500).json({"msg": `Error occured : ${error}`});
     }
 });
 
@@ -128,7 +128,7 @@ app.delete("/tasks/:id", (req, res) => {
         return res.status(404).send({"msg": `Task with id=${id} not found`});
     }
     catch(error){
-        return res.status(500).json({"msg": `Error occured : ${error}`})
+        return res.status(500).json({"msg": `Error occured : ${error}`});
     }
 });
 
