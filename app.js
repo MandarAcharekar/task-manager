@@ -1,3 +1,4 @@
+const fs = require('fs');
 const express = require('express');
 const app = express();
 const port = 3000;
@@ -5,13 +6,20 @@ const port = 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-let tasks = [{
-    id: 1,
-    title: "Set up environment",
-    description: "Install Node.js, npm, and git",
-    completed: true,
-}];
+let tasks = null;
 
+async function readJSONFile(filepath){
+    return new Promise((resolve, reject) => {
+        fs.readFile(filepath, (err, data) => {
+            const taskArray = JSON.parse(data)["tasks"];
+            resolve(taskArray);
+        });
+    });
+};
+readJSONFile('task.json').then((data) => { tasks = data; });
+
+
+// ------------------- ROUTES --------------------
 app.get("/", (req, res) => {
     return res.send("<h2>This is Task Manager Home Page</h1>");
 });
@@ -52,7 +60,12 @@ app.post("/tasks/", (req, res) => {
         };
         tasks.push(newTask);
 
-        return res.status(201).json(tasks.slice(-1));
+        // latestTask = tasks.slice(-1);
+        return res.status(201).json({
+            title: title,
+            description: description,
+            completed: completed
+        });
     }
 });
 
