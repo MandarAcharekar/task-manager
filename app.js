@@ -6,18 +6,21 @@ const port = 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-let tasks = null;
 
-async function readJSONFile(filepath){
-    return new Promise((resolve, reject) => {
-        fs.readFile(filepath, (err, data) => {
-            const taskArray = JSON.parse(data)["tasks"];
-            resolve(taskArray);
-        });
-    });
-};
-readJSONFile('task.json').then((data) => { tasks = data; });
+// let tasks = null;
 
+// async function readJSONFile(filepath){
+//     return new Promise((resolve, reject) => {
+//         fs.readFile(filepath, (err, data) => {
+//             const taskArray = JSON.parse(data)["tasks"];
+//             resolve(taskArray);
+//         });
+//     });
+// };
+// readJSONFile('task.json').then((data) => { tasks = data; });
+
+const tasks_db = require('./task.json');
+const tasks = tasks_db['tasks'];
 
 // ------------------- ROUTES --------------------
 app.get("/", (req, res) => {
