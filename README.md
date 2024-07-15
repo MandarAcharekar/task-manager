@@ -79,7 +79,7 @@ This is a simple RESTful API for managing tasks, built with Node.js and Express.
 }
 ```
 - Response: `200 OK` JSON object of the updated task.
-Example:
+- Example:
 ```json
 {
   "id": 1,
