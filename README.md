@@ -9,7 +9,10 @@ This is a simple RESTful API for managing tasks, built with Node.js and Express.
 ### `GET /`
 - Description: Returns the home page.
 - Response: `200 OK` HTML content.
-- Example: `<h2>This is Task Manager Home Page</h1>`
+- Example: 
+```
+<h2>This is Task Manager Home Page</h1>
+```
 
 ### `GET /tasks`
 - Description: Retrieve all tasks.
